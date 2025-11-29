@@ -6,7 +6,6 @@
   <title>Stripe Golf — мобильный интерфейс</title>
   <style>
 
-
     @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap");
 
     :root {
@@ -38,10 +37,17 @@
       font-family: var(--font-sans);
       background: var(--bg-app);
       color: var(--text);
-      display: flex;
-      justify-content: center;
       min-height: 100vh;
+    }
+
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
       padding: 16px 10px 24px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      flex-direction: column;
     }
 
     h1,
@@ -54,14 +60,16 @@
     }
 
     .app {
-      width: min(430px, 100%);
+      flex: 1;
+      width: 100%;
       background: var(--surface);
       border-radius: 24px;
       border: 1px solid var(--border);
       box-shadow: var(--shadow-soft);
-      padding: 14px 14px 84px;
+      padding: 14px 14px 96px;
       position: relative;
       overflow: hidden;
+      min-height: calc(100vh - 80px);
     }
 
     .top-shell {
@@ -422,7 +430,8 @@
       left: 50%;
       transform: translateX(-50%);
       bottom: 16px;
-      width: min(430px, calc(100% - 28px));
+      width: calc(100% - 24px);
+      max-width: 520px;
       z-index: 20;
     }
 
@@ -464,6 +473,50 @@
 
     .nav-btn.active .icon {
       color: var(--brand-primary);
+    }
+
+    @media (min-width: 900px) {
+      .layout {
+        padding: 28px 24px 32px;
+        flex-direction: row;
+      }
+
+      .app {
+        padding-bottom: 28px;
+      }
+
+      .nav-shell {
+        position: sticky;
+        transform: none;
+        left: 0;
+        bottom: auto;
+        top: 24px;
+        width: 230px;
+        align-self: flex-start;
+      }
+
+      .nav-bar {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .nav-btn {
+        justify-content: flex-start;
+        grid-template-columns: unset;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        font-size: 14px;
+        width: 100%;
+      }
+
+      .nav-btn .icon {
+        font-size: 17px;
+      }
     }
 
     .map-card {
@@ -566,7 +619,17 @@
 </style>
 </head>
 <body>
-  <div class="app">
+  <div class="layout">
+    <aside class="nav-shell">
+      <div class="nav-bar">
+        <button class="nav-btn" data-nav="profile"><div class="icon">🏠</div><div>Главная</div></button>
+        <button class="nav-btn" data-nav="play"><div class="icon">⛳</div><div>Играть</div></button>
+        <button class="nav-btn" data-nav="map"><div class="icon">🗺️</div><div>Карта</div></button>
+        <button class="nav-btn" data-nav="clubs"><div class="icon">🏌️‍♂️</div><div>Клубы</div></button>
+        <button class="nav-btn" data-nav="tournaments"><div class="icon">🏆</div><div>Турниры</div></button>
+      </div>
+    </aside>
+    <div class="app">
     <div class="top-shell">
       <div class="status-bar">
         <span>16:06</span>
@@ -574,7 +637,7 @@
         <span>85%</span>
       </div>
 
-      <div class="top-icons"> 
+      <div class="top-icons">
         <button class="icon-btn" id="messages-btn">💬 Сообщения</button>
         <button class="icon-btn primary" id="news-btn">🔔 Новости</button>
       </div>
@@ -723,14 +786,6 @@
       <div class="card-list" id="tournament-list"></div>
     </div>
 
-    <div class="nav-shell">
-      <div class="nav-bar">
-        <button class="nav-btn" data-nav="profile"><div class="icon">🏠</div><div>Главная</div></button>
-        <button class="nav-btn" data-nav="play"><div class="icon">⛳</div><div>Играть</div></button>
-        <button class="nav-btn" data-nav="map"><div class="icon">🗺️</div><div>Карта</div></button>
-        <button class="nav-btn" data-nav="clubs"><div class="icon">🏌️‍♂️</div><div>Клубы</div></button>
-        <button class="nav-btn" data-nav="tournaments"><div class="icon">🏆</div><div>Турниры</div></button>
-      </div>
     </div>
   </div>
 
