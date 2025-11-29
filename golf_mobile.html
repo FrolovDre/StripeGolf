@@ -35,13 +35,22 @@
       overflow: hidden;
     }
 
+    .top-shell {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
     .status-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 12px;
       color: #cbd5e1;
-      margin-bottom: 6px;
+      padding: 6px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(15, 23, 42, 0.35);
     }
 
     .status-pill {
@@ -57,7 +66,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      gap: 8px;
     }
 
     .icon-btn {
@@ -316,15 +325,17 @@
 </head>
 <body>
   <div class="app">
-    <div class="status-bar">
-      <span>16:06</span>
-      <span class="status-pill">LTE · Stripe Golf</span>
-      <span>85%</span>
-    </div>
+    <div class="top-shell">
+      <div class="status-bar">
+        <span>16:06</span>
+        <span class="status-pill">LTE · Stripe Golf</span>
+        <span>85%</span>
+      </div>
 
-    <div class="top-icons">
-      <button class="icon-btn" id="messages-btn">💬 Сообщения</button>
-      <button class="icon-btn primary" id="news-btn">🔔 Новости</button>
+      <div class="top-icons"> 
+        <button class="icon-btn" id="messages-btn">💬 Сообщения</button>
+        <button class="icon-btn primary" id="news-btn">🔔 Новости</button>
+      </div>
     </div>
 
     <div class="section" data-section="profile">
@@ -531,6 +542,7 @@
 
   <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" async></script>
   <script>
+    const topShell = document.querySelector('.top-shell');
     const sections = document.querySelectorAll('[data-section]');
     const navButtons = document.querySelectorAll('.nav-btn');
     const slotList = document.getElementById('slot-list');
@@ -569,7 +581,11 @@
       { id: 'slot-9', date: '2025-06-27', time: '19:40', clubId: 'piro', club: 'Pirogovo Golf Club', location: 'Пирогово', capacity: 3, booked: 1, tags: ['sim'], price: '5 500 ₽', label: 'СИМУЛЯТОР' },
       { id: 'slot-10', date: '2025-06-28', time: '08:15', clubId: 'moscowcc', club: 'Moscow Country Club', location: 'Нахабино', capacity: 4, booked: 2, tags: ['tee'], price: '8 900 ₽', label: 'ТИ-ТАЙМ' },
       { id: 'slot-11', date: '2025-06-28', time: '13:05', clubId: 'agalarov', club: 'Agalarov Golf & Country Club', location: 'Куркино', capacity: 4, booked: 1, tags: ['sim'], price: '4 900 ₽', label: 'СИМУЛЯТОР' },
-      { id: 'slot-12', date: '2025-06-28', time: '18:50', clubId: 'tseleevo', club: 'Tseleevo Golf & Polo Club', location: 'Софрино', capacity: 4, booked: 2, tags: ['tee'], price: '9 200 ₽', label: 'ТИ-ТАЙМ' }
+      { id: 'slot-12', date: '2025-06-28', time: '18:50', clubId: 'tseleevo', club: 'Tseleevo Golf & Polo Club', location: 'Софрино', capacity: 4, booked: 2, tags: ['tee'], price: '9 200 ₽', label: 'ТИ-ТАЙМ' },
+      { id: 'slot-13', date: '2025-06-29', time: '09:05', clubId: 'tseleevo', club: 'Tseleevo Golf & Polo Club', location: 'Софрино', capacity: 4, booked: 1, tags: ['training'], price: '6 800 ₽', label: 'ТРЕНИРОВКА' },
+      { id: 'slot-14', date: '2025-06-29', time: '14:20', clubId: 'pestovo', club: 'Pestovo Golf & Yacht Club', location: 'Мытищи', capacity: 3, booked: 0, tags: ['tee'], price: '8 200 ₽', label: 'ТИ-ТАЙМ' },
+      { id: 'slot-15', date: '2025-06-29', time: '19:15', clubId: 'agalarov', club: 'Agalarov Golf & Country Club', location: 'Куркино', capacity: 4, booked: 3, tags: ['tee'], price: '9 600 ₽', label: 'ТИ-ТАЙМ' },
+      { id: 'slot-16', date: '2025-06-30', time: '11:40', clubId: 'piro', club: 'Pirogovo Golf Club', location: 'Пирогово', capacity: 3, booked: 1, tags: ['sim'], price: '4 700 ₽', label: 'СИМУЛЯТОР' }
     ];
 
     const tournaments = [
@@ -582,9 +598,10 @@
 
     function setActiveSection(target, button) {
       const key = navAliases[target] || target;
+      const shouldShowHero = key === 'profile';
+      document.querySelector('.hero')?.classList.toggle('hidden', !shouldShowHero);
+      topShell?.classList.toggle('hidden', !shouldShowHero);
       sections.forEach((section) => {
-        const shouldShowHero = key === 'profile';
-        document.querySelector('.hero')?.classList.toggle('hidden', !shouldShowHero);
         section.classList.toggle('hidden', section.dataset.section !== key);
       });
       if (button) {
