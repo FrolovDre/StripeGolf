@@ -2,287 +2,148 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
+  <title>Stripe Golf — Мобильный прототип</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stripe Golf — мобильный интерфейс</title>
   <style>
-    :root {
-      color-scheme: dark;
-    }
-
-    * {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
     }
 
+    html,
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      background: radial-gradient(circle at 15% 20%, #172554 0%, #0b1327 30%, #020617 70%);
-      color: #e2e8f0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       min-height: 100vh;
-      padding: 16px 14px 22px;
-    }
-
-    .status-bar {
-      display: grid;
-      grid-template-columns: auto auto auto;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: #9ca3af;
-      margin-bottom: 16px;
-    }
-
-    .status-bar .time {
-      font-weight: 700;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 55%, #020617 100%);
       color: #e5e7eb;
-      letter-spacing: 0.2px;
     }
 
-    .pill {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
-      padding: 6px 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: #a5f3fc;
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
-    }
-
-    .screen-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 22px;
-      letter-spacing: -0.2px;
-    }
-
-    .badge {
-      background: linear-gradient(120deg, rgba(45, 212, 191, 0.25), rgba(14, 165, 233, 0.2));
-      border: 1px solid rgba(45, 212, 191, 0.35);
-      color: #a5f3fc;
-      padding: 8px 14px;
-      border-radius: 16px;
-      font-size: 13px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 12px rgba(14, 165, 233, 0.25);
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(15, 23, 42, 0.75));
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
-      padding: 16px;
+    .phone-shell {
+      width: 430px;
+      max-width: 100%;
+      aspect-ratio: 430 / 820;
+      border-radius: 42px;
+      background: linear-gradient(145deg, #020617, #0b1220);
+      padding: 6px;
       box-shadow:
-        0 20px 45px rgba(2, 6, 23, 0.7),
-        inset 0 0 0 1px rgba(148, 163, 184, 0.08);
-      margin-bottom: 14px;
-    }
-
-    .balance {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-    }
-
-    .balance .amount {
-      font-size: 32px;
-      margin: 6px 0 4px;
-      letter-spacing: -0.5px;
-    }
-
-    .pill-alt {
-      background: rgba(168, 85, 247, 0.12);
-      border-color: rgba(168, 85, 247, 0.35);
-      color: #e9d5ff;
-    }
-
-    .progress {
+        0 50px 120px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.55);
       position: relative;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: 10px;
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
     }
 
-    .progress span {
+    .phone-inner {
+      border-radius: 34px;
+      overflow: hidden;
+      background: #000;
+      flex: 1;
+      position: relative;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.95);
+    }
+
+    .phone-notch {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 160px;
+      height: 26px;
+      border-radius: 16px;
+      background: #020617;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9);
+      z-index: 10;
+    }
+
+    .phone-notch::before,
+    .phone-notch::after {
+      content: "";
+      position: absolute;
+      top: 8px;
+      width: 26px;
+      height: 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #4b5563 0, #020617 80%);
+    }
+
+    .phone-notch::before {
+      left: 14px;
+    }
+
+    .phone-notch::after {
+      right: 14px;
+    }
+
+    .phone-screen {
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, #22d3ee, #a855f7);
-      width: 72%;
+      padding: 18px 8px 10px;
     }
 
-    .actions {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      margin-bottom: 10px;
+    .phone-screen iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 26px;
+      background: #020617;
     }
 
-    .action {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      padding: 10px 6px;
+    .phone-badge {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      color: #9ca3af;
       text-align: center;
-      font-size: 13px;
-      color: #cbd5e1;
-      display: grid;
-      gap: 6px;
-      transition: transform 120ms ease, border-color 120ms ease;
+      opacity: 0.9;
     }
 
-    .action:hover {
-      transform: translateY(-2px);
-      border-color: rgba(165, 243, 252, 0.45);
+    .phone-badge span {
+      color: #a5f3fc;
     }
 
-    .action .icon {
-      width: 34px;
-      height: 34px;
-      margin: 0 auto;
-      border-radius: 12px;
-      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.18), rgba(59, 130, 246, 0.35));
-      display: grid;
-      place-items: center;
-      font-size: 16px;
-      color: #e0f2fe;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    }
+    @media (max-width: 480px) {
+      .phone-shell {
+        width: 100%;
+        max-width: 380px;
+        border-radius: 32px;
+      }
 
-    .section-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 14px 0 8px;
-      font-size: 15px;
-      color: #cbd5e1;
-    }
+      .phone-inner {
+        border-radius: 26px;
+      }
 
-    .list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .list-item {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      padding: 12px 12px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 4px 12px;
-      align-items: center;
-    }
-
-    .list-item strong {
-      font-size: 15px;
-      letter-spacing: -0.1px;
-    }
-
-    .pill-label {
-      background: rgba(45, 212, 191, 0.12);
-      border: 1px solid rgba(45, 212, 191, 0.35);
-      color: #99f6e4;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 12px;
-    }
-
-    .list-item small {
-      color: #94a3b8;
-    }
-
-    .footer-note {
-      text-align: center;
-      color: #94a3b8;
-      font-size: 12px;
-      margin-top: 12px;
+      .phone-screen iframe {
+        border-radius: 22px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="status-bar">
-    <span class="time">09:41</span>
-    <span class="pill">Stripe Golf · Live</span>
-    <span style="text-align: right;">LTE · 85%</span>
-  </div>
-
-  <div class="screen-title">
-    <h1>Stripe Golf</h1>
-    <div class="badge">iPhone UI · 2025</div>
-  </div>
-
-  <div class="card">
-    <div class="balance">
-      <div>
-        <div style="color:#94a3b8;font-size:13px;">Баланс за выезд</div>
-        <div class="amount">12 480 ₽</div>
-        <div style="color:#a5f3fc;font-size:13px;">+320 ₽ за клубную карту</div>
+  <div class="phone-shell">
+    <div class="phone-inner">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <iframe src="golf_web.html" title="Stripe Golf — мобильный интерфейс"></iframe>
       </div>
-      <div class="pill pill-alt">Уровень PRO</div>
     </div>
-    <div class="progress" aria-hidden="true"><span></span></div>
-  </div>
-
-  <div class="actions">
-    <div class="action">
-      <div class="icon">✚</div>
-      Новая бронь
-    </div>
-    <div class="action">
-      <div class="icon">📍</div>
-      Клубы рядом
-    </div>
-    <div class="action">
-      <div class="icon">💳</div>
-      Оплаты
-    </div>
-    <div class="action">
-      <div class="icon">📈</div>
-      Статистика
+    <div class="phone-badge">
+      Просмотр мобильной версии сервиса <span>Stripe Golf</span><br />
+      Полностью управляемый интерфейс внутри рамки iPhone.
     </div>
   </div>
-
-  <div class="section-title">
-    <span>Ближайшие старты</span>
-    <span style="color:#a5f3fc;font-size:13px;">Смотреть все</span>
-  </div>
-
-  <div class="list">
-    <div class="list-item">
-      <div>
-        <strong>Forest Hills · 18 лунок</strong><br />
-        <small>Воскресенье, 10:30 · 2 игрока</small>
-      </div>
-      <div class="pill-label">Оплачено</div>
-      <div style="color:#94a3b8;">Каршеринг · 15 мин</div>
-      <div style="color:#e2e8f0;">4 200 ₽</div>
-    </div>
-
-    <div class="list-item">
-      <div>
-        <strong>Links Valley · 9 лунок</strong><br />
-        <small>Понедельник, 07:45 · 1 игрок</small>
-      </div>
-      <div class="pill-label" style="background:rgba(234,179,8,0.12);border-color:rgba(234,179,8,0.3);color:#fcd34d;">Ожидает</div>
-      <div style="color:#94a3b8;">Кадди включён</div>
-      <div style="color:#e2e8f0;">6 900 ₽</div>
-    </div>
-  </div>
-
-  <div class="footer-note">Интерфейс оптимизирован под рамку iPhone в обёртке golf_mobile.html</div>
 </body>
 </html>
