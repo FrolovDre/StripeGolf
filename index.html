@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Stripe Golf</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar" aria-label="Главное меню">
+      <div class="brand">Stripe Golf</div>
+      <nav class="nav-list" data-nav="sidebar">
+        <button class="nav-item nav-item--active" data-section="profile" aria-label="Профиль">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Главная</span>
+        </button>
+        <button class="nav-item" data-section="play" aria-label="Играть">
+          <span class="nav-icon">⛳</span>
+          <span class="nav-label">Играть</span>
+        </button>
+        <button class="nav-item" data-section="map" aria-label="Карта клубов">
+          <span class="nav-icon">🗺️</span>
+          <span class="nav-label">Карта</span>
+        </button>
+        <button class="nav-item" data-section="clubs" aria-label="Клубы">
+          <span class="nav-icon">🏌️‍♂️</span>
+          <span class="nav-label">Клубы</span>
+        </button>
+        <button class="nav-item" data-section="tournaments" aria-label="Турниры">
+          <span class="nav-icon">🏆</span>
+          <span class="nav-label">Турниры</span>
+        </button>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <section class="section section--active" id="profile" aria-labelledby="profile-title">
+        <header class="topbar">
+          <div class="top-actions-left">
+            <button class="icon-ghost" aria-label="Сообщения">
+              <span class="icon">💬</span>
+            </button>
+          </div>
+          <div class="top-actions-right">
+            <button class="icon-ghost" aria-label="Новости">
+              <span class="icon">🔔</span>
+            </button>
+            <button class="icon-ghost" aria-label="Настройки">
+              <span class="icon">⚙️</span>
+            </button>
+            <button class="icon-ghost" aria-label="Поддержка">
+              <span class="icon">🎧</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Домашняя</p>
+            <h1 id="profile-title">Профиль игрока</h1>
+            <p class="muted">Ваши ближайшие игры, гандикап и активность.</p>
+          </div>
+          <div class="badge gold">HCP 7.8</div>
+        </div>
+
+        <div class="grid two">
+          <article class="card highlight">
+            <div class="card-title">Ближайшие бронирования</div>
+            <div class="booking-list" id="profile-bookings"></div>
+          </article>
+          <article class="card">
+            <div class="card-title">Статистика</div>
+            <ul class="stats">
+              <li><span>Сыграно раундов</span><strong>42</strong></li>
+              <li><span>Средний счёт</span><strong>78</strong></li>
+              <li><span>Лучший результат</span><strong>-2</strong></li>
+              <li><span>Часов на тренировках</span><strong>126</strong></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="play" aria-labelledby="play-title">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Выбор слотов</p>
+            <h1 id="play-title">Играть</h1>
+            <p class="muted">Автоматические фильтры и теги для бронирования.</p>
+          </div>
+          <div class="filters-quick" id="active-filter-pill"></div>
+        </div>
+
+        <div class="filters" id="filters">
+          <div class="filter-group" data-filter="date">
+            <label>Дата</label>
+            <div class="chip-row">
+              <button class="chip chip--active" data-value="all">Все даты</button>
+              <button class="chip" data-value="today">Сегодня</button>
+              <button class="chip" data-value="tomorrow">Завтра</button>
+              <button class="chip" data-value="weekend">Выходные</button>
+            </div>
+          </div>
+          <div class="filter-group" data-filter="time">
+            <label>Время</label>
+            <div class="chip-row">
+              <button class="chip chip--active" data-value="all">Любое</button>
+              <button class="chip" data-value="morning">Утро</button>
+              <button class="chip" data-value="day">День</button>
+              <button class="chip" data-value="evening">Вечер</button>
+            </div>
+          </div>
+          <div class="filter-group select-group">
+            <label for="playersSelect">Количество игроков</label>
+            <select id="playersSelect">
+              <option value="all">Любое</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+          <div class="filter-group select-group">
+            <label for="clubSelect">Клуб</label>
+            <select id="clubSelect"></select>
+          </div>
+          <div class="filter-group" data-filter="tag">
+            <label>Тип</label>
+            <div class="chip-row">
+              <button class="chip chip--active" data-value="all">Все</button>
+              <button class="chip chip--tee" data-value="Ти-тайм">Ти-тайм</button>
+              <button class="chip chip--training" data-value="Тренировка">Тренировка</button>
+              <button class="chip chip--sim" data-value="Гольф-симулятор">Гольф-симулятор</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="slot-list" id="slot-list"></div>
+      </section>
+
+      <section class="section" id="map" aria-labelledby="map-title">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Локации</p>
+            <h1 id="map-title">Карта клубов</h1>
+            <p class="muted">Реальные координаты и быстрый переход к слотам.</p>
+          </div>
+        </div>
+        <div class="map-wrapper">
+          <iframe id="clubs-map" title="Карта гольф-клубов" src="" allowfullscreen></iframe>
+        </div>
+        <div class="card-row" id="map-club-cards"></div>
+      </section>
+
+      <section class="section" id="clubs" aria-labelledby="clubs-title">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Каталог</p>
+            <h1 id="clubs-title">Клубы</h1>
+            <p class="muted">Уникальные особенности и карта каждого поля.</p>
+          </div>
+        </div>
+        <div class="card-grid" id="club-cards"></div>
+      </section>
+
+      <section class="section" id="tournaments" aria-labelledby="tournaments-title">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Соревнования</p>
+            <h1 id="tournaments-title">Турниры</h1>
+            <p class="muted">Участвуйте и следите за расписанием.</p>
+          </div>
+        </div>
+        <div class="card-grid" id="tournament-cards"></div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav" aria-label="Нижняя навигация" data-nav="bottom">
+    <button class="nav-item nav-item--active" data-section="profile">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Главная</span>
+    </button>
+    <button class="nav-item" data-section="play">
+      <span class="nav-icon">⛳</span>
+      <span class="nav-label">Играть</span>
+    </button>
+    <button class="nav-item" data-section="map">
+      <span class="nav-icon">🗺️</span>
+      <span class="nav-label">Карта</span>
+    </button>
+    <button class="nav-item" data-section="clubs">
+      <span class="nav-icon">🏌️‍♂️</span>
+      <span class="nav-label">Клубы</span>
+    </button>
+    <button class="nav-item" data-section="tournaments">
+      <span class="nav-icon">🏆</span>
+      <span class="nav-label">Турниры</span>
+    </button>
+  </nav>
+
+  <div class="modal hidden" id="course-modal" role="dialog" aria-modal="true" aria-labelledby="course-title">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow" id="course-club"></p>
+          <h2 id="course-title">Карта поля</h2>
+        </div>
+        <button class="icon-ghost" id="close-course" aria-label="Закрыть карту">✕</button>
+      </div>
+      <div class="course-map" id="course-map"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
