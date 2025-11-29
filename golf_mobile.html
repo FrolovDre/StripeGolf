@@ -285,6 +285,17 @@
 
     .map-card { border-radius: 16px; overflow: hidden; border: 1px solid rgba(148, 163, 184, 0.35); }
     #club-map, #club-map-view { width: 100%; height: 260px; background: #0b1327; }
+    .course-map-img {
+      height: 260px;
+      background: radial-gradient(circle at 20% 20%, rgba(52, 211, 153, 0.45), rgba(16, 185, 129, 0.2)),
+        radial-gradient(circle at 80% 40%, rgba(14, 165, 233, 0.4), rgba(14, 165, 233, 0.15)),
+        linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      background-size: cover;
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
+    }
+    .course-map-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     .modal {
       position: fixed;
@@ -405,11 +416,6 @@
             <div class="subtle">Не подтверждён · запросите у тренера</div>
           </div>
           <span class="badge">Как подтвердить?</span>
-        </div>
-        <div class="tag-list">
-          <span class="tag">Обе стороны корта</span>
-          <span class="tag">Москва</span>
-          <span class="tag">Доступен чат с тренером</span>
         </div>
       </div>
     </div>
@@ -562,15 +568,68 @@
     const navAliases = { map: 'map', clubs: 'clubs', play: 'play', profile: 'profile', tournaments: 'tournaments' };
     let activeNavButton = null;
     let mapInstance = null;
-    let modalMap = null;
 
     const clubs = [
-      { id: 'skolkovo', name: 'Skolkovo Golf Club', area: 'Сколково', coords: [55.6785, 37.3734], note: 'Парковый курс рядом с центром', tags: ['турниры', '18 лунок', 'ближе к центру'] },
-      { id: 'moscowcc', name: 'Moscow Country Club', area: 'Нахабино', coords: [55.8921, 37.0913], note: 'Лесной лэйаут', tags: ['лесной рельеф', '18 лунок'] },
-      { id: 'pestovo', name: 'Pestovo Golf & Yacht Club', area: 'Мытищи', coords: [56.0372, 37.5339], note: 'Курс у воды', tags: ['закатный вид', 'у воды'] },
-      { id: 'agalarov', name: 'Agalarov Golf & Country Club', area: 'Куркино', coords: [55.9178, 37.223], note: 'Чемпионский пар-72', tags: ['чемпионский', 'пар-72'] },
-      { id: 'piro', name: 'Pirogovo Golf Club', area: 'Пирогово', coords: [56.1384, 37.4145], note: 'Север Москвы, курортный настрой', tags: ['закат', 'тренировки'] },
-      { id: 'tseleevo', name: 'Tseleevo Golf & Polo Club', area: 'Софрино', coords: [56.3083, 37.436], note: 'Лесной курс с перепадами', tags: ['лесной', '18 лунок'] }
+      {
+        id: 'skolkovo',
+        name: 'Skolkovo Golf Club',
+        area: 'Сколково',
+        coords: [55.6785, 37.3734],
+        note: 'Парковый курс у усадьбы',
+        unique: 'Подпись Jack Nicklaus, вид на усадьбу',
+        holes: 18,
+        tags: ['18 лунок', 'Подпись Jack Nicklaus', 'Парковый/линкс микс']
+      },
+      {
+        id: 'moscowcc',
+        name: 'Moscow Country Club',
+        area: 'Нахабино',
+        coords: [55.8921, 37.0913],
+        note: 'Лесной лэйаут',
+        unique: 'Речной каньон на 6-й лунке',
+        holes: 18,
+        tags: ['18 лунок', 'Лесной рельеф', 'Речной каньон']
+      },
+      {
+        id: 'pestovo',
+        name: 'Pestovo Golf & Yacht Club',
+        area: 'Мытищи',
+        coords: [56.0372, 37.5339],
+        note: 'Курс у воды',
+        unique: 'Финиш у марина-клаба',
+        holes: 18,
+        tags: ['18 лунок', 'У воды', 'Подход к марине']
+      },
+      {
+        id: 'agalarov',
+        name: 'Agalarov Golf & Country Club',
+        area: 'Куркино',
+        coords: [55.9178, 37.223],
+        note: 'Чемпионский пар-72',
+        unique: 'Островные гринЫ и большие бункеры',
+        holes: 18,
+        tags: ['18 лунок', 'Чемпионский пар-72', 'Островные грины']
+      },
+      {
+        id: 'piro',
+        name: 'Pirogovo Golf Club',
+        area: 'Пирогово',
+        coords: [56.1384, 37.4145],
+        note: 'Север Москвы, курортный настрой',
+        unique: 'Есть лунка на воде',
+        holes: 9,
+        tags: ['9 лунок', 'Лунка на воде', 'Закат над озером']
+      },
+      {
+        id: 'tseleevo',
+        name: 'Tseleevo Golf & Polo Club',
+        area: 'Софрино',
+        coords: [56.3083, 37.436],
+        note: 'Лесной курс с перепадами',
+        unique: 'Высотные перепады и лесные коридоры',
+        holes: 18,
+        tags: ['18 лунок', 'Высотный рельеф', 'Лесные коридоры']
+      }
     ];
 
     const slots = [
@@ -599,6 +658,7 @@
     ];
 
     const selectedSlots = new Set();
+    const registeredTournaments = new Set();
 
     function setActiveSection(target, button) {
       const key = navAliases[target] || target;
@@ -658,6 +718,39 @@
       return `${day}.${month}.${year}`;
     }
 
+    function courseMapImage(club) {
+      const holes = club.holes || 18;
+      const highlight = club.unique || club.note || '';
+      const waterColor = highlight.toLowerCase().includes('вода') ? '#0ea5e9' : '#22d3ee';
+      const pathColor = '#22c55e';
+      const fairway = '#16a34a';
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220" fill="none">
+        <defs>
+          <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0b1220" />
+            <stop offset="1" stop-color="#0f172a" />
+          </linearGradient>
+        </defs>
+        <rect width="360" height="220" rx="18" fill="url(#bg)" />
+        <ellipse cx="290" cy="70" rx="46" ry="26" fill="${waterColor}" opacity="0.55" />
+        <ellipse cx="90" cy="60" rx="36" ry="20" fill="${waterColor}" opacity="0.35" />
+        <path d="M40 170 C 120 120, 200 200, 320 150" stroke="${pathColor}" stroke-width="12" stroke-linecap="round" opacity="0.75"/>
+        <path d="M60 90 C 120 110, 200 80, 300 110" stroke="${fairway}" stroke-width="24" stroke-linecap="round" opacity="0.45"/>
+        ${Array.from({ length: Math.min(holes, 9) }, (_, i) => {
+          const angle = (i / Math.min(holes, 9)) * Math.PI * 1.4 + 0.3;
+          const radius = 70 + i * 4;
+          const x = 180 + Math.cos(angle) * radius;
+          const y = 120 + Math.sin(angle) * radius * 0.6;
+          return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="#e5e7eb" stroke="#0b1327" stroke-width="2" />
+                  <text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="middle" dy="3" font-size="9" fill="#0b1327" font-family="Arial">${i + 1}</text>`;
+        }).join('')}
+        <text x="16" y="26" fill="#e2e8f0" font-size="14" font-family="Arial" font-weight="700">${club.name}</text>
+        <text x="16" y="46" fill="#94a3b8" font-size="12" font-family="Arial">${holes} лунок · ${highlight}</text>
+        <text x="16" y="66" fill="#22d3ee" font-size="11" font-family="Arial">${club.area}</text>
+      </svg>`;
+      return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+    }
+
     function renderClubs() {
       clubList.innerHTML = '';
       clubs.forEach((club) => {
@@ -674,7 +767,7 @@
           <div class="tag-list">${club.tags.map((tag) => `<span class="tag">${tag}</span>`).join('')}</div>
           <div class="slot-actions">
             <button class="map-btn" data-map="${club.id}">Карта поля</button>
-            <span class="subtle">Метка откроется в Яндекс.Картах</span>
+            <span class="subtle">Схема гольф-поля клуба</span>
           </div>
         `;
         clubList.appendChild(card);
@@ -725,10 +818,14 @@
       tournaments.forEach((event) => {
         const card = document.createElement('div');
         card.className = 'tournament-card';
+        const registered = registeredTournaments.has(event.name);
         card.innerHTML = `
           <div class="slot-top"><h3 style="margin:0;">${event.name}</h3><span class="badge">${event.date}</span></div>
           <div class="subtle">${event.club}</div>
-          <div class="tag-list"><span class="tag">${event.prize}</span></div>
+          <div class="tag-list"><span class="tag">${event.prize}</span><span class="tag">${registered ? 'Участник' : 'Есть места'}</span></div>
+          <div class="slot-actions">
+            <button class="slot-cta ${registered ? 'selected' : ''}" data-register="${event.name}">${registered ? 'Вы зарегистрированы' : 'Записаться'}</button>
+          </div>
         `;
         tournamentList.appendChild(card);
       });
@@ -785,6 +882,18 @@
       renderSlots();
     });
 
+    tournamentList.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-register]');
+      if (!button) return;
+      const key = button.dataset.register;
+      if (registeredTournaments.has(key)) {
+        registeredTournaments.delete(key);
+      } else {
+        registeredTournaments.add(key);
+      }
+      renderTournaments();
+    });
+
     clubList.addEventListener('click', (event) => {
       const mapButton = event.target.closest('[data-map]');
       if (mapButton) {
@@ -828,19 +937,13 @@
       toggleModal('club-map-modal', true);
       document.getElementById('modal-club-title').textContent = `Карта: ${club.name}`;
       const meta = document.getElementById('modal-club-meta');
-      meta.innerHTML = `<div class="subtle">${club.area} · ${club.note}</div><button class="cta" id="modal-apply-club">Играть в ${club.name}</button>`;
+      meta.innerHTML = `
+        <div class="subtle">${club.area} · ${club.note}</div>
+        <div class="tag-list"><span class="tag">${club.holes || 18} лунок</span><span class="tag">${club.unique || 'Особенность поля'}</span></div>
+        <button class="cta" id="modal-apply-club">Играть в ${club.name}</button>`;
       meta.querySelector('#modal-apply-club').addEventListener('click', () => applyClubFilter(club.id, true));
-      if (!window.ymaps) return;
-      ymaps.ready(() => {
-        if (!modalMap) {
-          modalMap = new ymaps.Map('club-map-view', { center: club.coords, zoom: 12, controls: ['zoomControl'] });
-        } else {
-          modalMap.setCenter(club.coords, 12);
-        }
-        modalMap.geoObjects.removeAll();
-        const placemark = new ymaps.Placemark(club.coords, { balloonContent: club.name }, { preset: 'islands#redSportIcon' });
-        modalMap.geoObjects.add(placemark);
-      });
+      const mapView = document.getElementById('club-map-view');
+      mapView.innerHTML = `<div class="course-map-img" aria-label="Схема поля ${club.name}"><img src="${courseMapImage(club)}" alt="Схема поля ${club.name}" loading="lazy" /></div>`;
     }
 
     const mapScript = document.querySelector('script[src*="api-maps.yandex"]');
