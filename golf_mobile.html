@@ -193,23 +193,24 @@
       box-sizing: border-box;
     }
 
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-        background: radial-gradient(circle at 15% 20%, #172554 0%, #0b1327 30%, #020617 70%);
-        color: #e2e8f0;
-        min-height: 100vh;
-        padding: 16px 14px 22px;
-        display: flex;
-        justify-content: center;
-      }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at 15% 20%, #172554 0%, #0b1327 35%, #020617 70%);
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 14px 14px 22px;
+      display: flex;
+      justify-content: center;
+    }
 
-      .app {
-        width: 100%;
-        max-width: 420px;
-        display: flex;
-        flex-direction: column;
-      }
+    .app {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
     .status-bar {
       display: grid;
@@ -218,267 +219,798 @@
       gap: 8px;
       font-size: 13px;
       color: #9ca3af;
-      margin-bottom: 16px;
     }
 
-    .status-bar .time {
-      font-weight: 700;
+    .time {
+      font-variant-numeric: tabular-nums;
       color: #e5e7eb;
-      letter-spacing: 0.2px;
     }
 
     .pill {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(16, 185, 129, 0.12);
+      color: #a7f3d0;
       border-radius: 999px;
-      padding: 6px 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: #a5f3fc;
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
+      padding: 8px 12px;
+      font-size: 12px;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
     }
 
-    .screen-title {
-      display: flex;
-      justify-content: space-between;
+    .hero {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
       align-items: center;
-      margin-bottom: 12px;
+      padding: 14px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.14), rgba(20,184,166,0.08));
+      border: 1px solid rgba(148,163,184,0.2);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.35);
     }
 
-    h1 {
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 30% 20%, #34d399 0%, #065f46 95%);
+      display: grid;
+      place-items: center;
+      color: #ecfeff;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+
+    .hero h1 {
       margin: 0;
-      font-size: 22px;
+      font-size: 18px;
       letter-spacing: -0.2px;
     }
 
-    .badge {
-      background: linear-gradient(120deg, rgba(45, 212, 191, 0.25), rgba(14, 165, 233, 0.2));
-      border: 1px solid rgba(45, 212, 191, 0.35);
-      color: #a5f3fc;
-      padding: 8px 14px;
-      border-radius: 16px;
-      font-size: 13px;
+    .hero small {
+      color: #93c5fd;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .toggle {
+      background: rgba(34, 197, 94, 0.14);
+      color: #bbf7d0;
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-size: 12px;
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 12px rgba(14, 165, 233, 0.25);
+      gap: 6px;
+      cursor: default;
     }
 
-    .card {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(15, 23, 42, 0.75));
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .section {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(148,163,184,0.18);
       border-radius: 18px;
-      padding: 16px;
-      box-shadow:
-        0 20px 45px rgba(2, 6, 23, 0.7),
-        inset 0 0 0 1px rgba(148, 163, 184, 0.08);
-      margin-bottom: 14px;
+      padding: 14px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.45);
     }
 
-    .balance {
+    .section-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-    }
-
-    .balance .amount {
-      font-size: 32px;
-      margin: 6px 0 4px;
-      letter-spacing: -0.5px;
-    }
-
-    .pill-alt {
-      background: rgba(168, 85, 247, 0.12);
-      border-color: rgba(168, 85, 247, 0.35);
-      color: #e9d5ff;
-    }
-
-    .progress {
-      position: relative;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: 10px;
-    }
-
-    .progress span {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, #22d3ee, #a855f7);
-      width: 72%;
-    }
-
-    .actions {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
       margin-bottom: 10px;
     }
 
-    .action {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      padding: 10px 6px;
-      text-align: center;
-      font-size: 13px;
-      color: #cbd5e1;
-      display: grid;
-      gap: 6px;
-      transition: transform 120ms ease, border-color 120ms ease;
-    }
-
-    .action:hover {
-      transform: translateY(-2px);
-      border-color: rgba(165, 243, 252, 0.45);
-    }
-
-    .action .icon {
-      width: 34px;
-      height: 34px;
-      margin: 0 auto;
-      border-radius: 12px;
-      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.18), rgba(59, 130, 246, 0.35));
-      display: grid;
-      place-items: center;
-      font-size: 16px;
-      color: #e0f2fe;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    }
-
     .section-title {
+      font-size: 16px;
+      margin: 0;
+      letter-spacing: -0.2px;
+    }
+
+    .hint {
+      color: #94a3b8;
+      font-size: 13px;
+      margin: 4px 0 10px;
+      line-height: 1.5;
+    }
+
+    .map-card {
+      position: relative;
+      background: radial-gradient(circle at 20% 30%, rgba(59,130,246,0.35), rgba(14,165,233,0.2), rgba(15,23,42,0.9));
+      border: 1px solid rgba(14,165,233,0.35);
+      border-radius: 16px;
+      padding: 14px;
+      overflow: hidden;
+      min-height: 180px;
+    }
+
+    .map-grid {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 26px 26px;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .marker {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #22d3ee, #3b82f6);
+      box-shadow: 0 0 0 6px rgba(59,130,246,0.22);
+    }
+
+    .marker-label {
+      position: absolute;
+      left: 16px;
+      top: -4px;
+      background: rgba(15,23,42,0.92);
+      border: 1px solid rgba(148,163,184,0.35);
+      padding: 6px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      white-space: nowrap;
+      color: #e2e8f0;
+    }
+
+    .map-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 14px 0 8px;
-      font-size: 15px;
+      margin-top: 14px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(59,130,246,0.45);
+      background: linear-gradient(145deg, rgba(59,130,246,0.16), rgba(14,165,233,0.12));
+      color: #bfdbfe;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .tag {
+      padding: 6px 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(148,163,184,0.3);
+      border-radius: 999px;
+      font-size: 12px;
       color: #cbd5e1;
     }
 
-    .list {
+    .card-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
-    .list-item {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      padding: 12px 12px;
+    .club-card, .slot-card, .news-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 12px;
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 4px 12px;
-      align-items: center;
+      gap: 8px;
     }
 
-    .list-item strong {
+    .club-card h3, .slot-card h3, .news-card h3 {
+      margin: 0;
       font-size: 15px;
-      letter-spacing: -0.1px;
     }
 
-    .pill-label {
-      background: rgba(45, 212, 191, 0.12);
-      border: 1px solid rgba(45, 212, 191, 0.35);
-      color: #99f6e4;
-      border-radius: 999px;
+    .club-meta, .slot-meta, .news-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    .cta {
+      margin-left: auto;
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(52, 211, 153, 0.5);
+      background: linear-gradient(145deg, rgba(52,211,153,0.14), rgba(16,185,129,0.12));
+      color: #bbf7d0;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .slot-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .slot-time {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(52, 211, 153, 0.12);
+      color: #befae3;
+      border: 1px solid rgba(52, 211, 153, 0.35);
       font-size: 12px;
     }
 
-    .list-item small {
-      color: #94a3b8;
+    .slot-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
     }
 
-    .footer-note {
-      text-align: center;
-      color: #94a3b8;
+    .slot-tag {
+      padding: 5px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.3);
+      background: rgba(255,255,255,0.04);
       font-size: 12px;
-      margin-top: 12px;
+      color: #cbd5e1;
+    }
+
+    .price {
+      font-weight: 700;
+      color: #e0f2fe;
+      letter-spacing: 0.3px;
+    }
+
+    .slot-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .slot-cta {
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(59,130,246,0.5);
+      background: linear-gradient(145deg, rgba(59,130,246,0.18), rgba(14,165,233,0.16));
+      color: #bfdbfe;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .slot-cta.selected {
+      background: linear-gradient(145deg, rgba(52,211,153,0.18), rgba(16,185,129,0.18));
+      border-color: rgba(52,211,153,0.6);
+      color: #d1fae5;
+      box-shadow: 0 10px 28px rgba(16,185,129,0.25);
+    }
+
+    .filters {
+      display: grid;
+      gap: 10px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(148,163,184,0.14);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+
+    .filters-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    label {
+      font-size: 12px;
+      color: #94a3b8;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    input[type="date"], select {
+      width: 100%;
+      padding: 9px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(255,255,255,0.04);
+      color: #e5e7eb;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(255,255,255,0.05);
+      cursor: pointer;
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+
+    .chip.active {
+      border-color: rgba(52,211,153,0.6);
+      background: linear-gradient(145deg, rgba(52,211,153,0.16), rgba(16,185,129,0.14));
+      color: #d1fae5;
+    }
+
+    .actions-bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .subtle {
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    .news-date {
+      color: #cbd5e1;
+      font-size: 12px;
+      border: 1px solid rgba(148,163,184,0.35);
+      padding: 5px 8px;
+      border-radius: 10px;
+      width: fit-content;
+    }
+
+    .nav-bar {
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(2,6,23,0.95);
+      border: 1px solid rgba(148,163,184,0.2);
+      border-radius: 16px;
+      padding: 10px 8px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-top: 6px;
+      box-shadow: 0 -8px 30px rgba(0,0,0,0.35);
+    }
+
+    .nav-btn {
+      display: grid;
+      place-items: center;
+      gap: 4px;
+      padding: 8px 6px;
+      border-radius: 12px;
+      color: #cbd5e1;
+      font-size: 12px;
+      border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .nav-btn .icon {
+      font-size: 16px;
+    }
+
+    .nav-btn.active {
+      border-color: rgba(59,130,246,0.6);
+      background: linear-gradient(145deg, rgba(59,130,246,0.16), rgba(14,165,233,0.12));
+      color: #e0f2fe;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
-  <body>
-    <div class="app">
-      <div class="status-bar">
-    <span class="time">09:41</span>
-    <span class="pill">Stripe Golf · Live</span>
-    <span style="text-align: right;">LTE · 85%</span>
-  </div>
+<body>
+  <div class="app">
+    <div class="status-bar">
+      <span class="time">09:41</span>
+      <span class="pill">Stripe Golf · Live</span>
+      <span style="text-align:right;">LTE · 85%</span>
+    </div>
 
-  <div class="screen-title">
-    <h1>Stripe Golf</h1>
-    <div class="badge">iPhone UI · 2025</div>
-  </div>
-
-  <div class="card">
-    <div class="balance">
+    <div class="hero">
+      <div class="logo">SG</div>
       <div>
-        <div style="color:#94a3b8;font-size:13px;">Баланс за выезд</div>
-        <div class="amount">12 480 ₽</div>
-        <div style="color:#a5f3fc;font-size:13px;">+320 ₽ за клубную карту</div>
+        <h1>Stripe Golf · Moscow Region</h1>
+        <small>Ближайшие клубы и слоты онлайн</small>
       </div>
-      <div class="pill pill-alt">Уровень PRO</div>
+      <div class="toggle">● Свободные слоты онлайн</div>
     </div>
-    <div class="progress" aria-hidden="true"><span></span></div>
-  </div>
 
-  <div class="actions">
-    <div class="action">
-      <div class="icon">✚</div>
-      Новая бронь
-    </div>
-    <div class="action">
-      <div class="icon">📍</div>
-      Клубы рядом
-    </div>
-    <div class="action">
-      <div class="icon">💳</div>
-      Оплаты
-    </div>
-    <div class="action">
-      <div class="icon">📈</div>
-      Статистика
-    </div>
-  </div>
-
-  <div class="section-title">
-    <span>Ближайшие старты</span>
-    <span style="color:#a5f3fc;font-size:13px;">Смотреть все</span>
-  </div>
-
-  <div class="list">
-    <div class="list-item">
-      <div>
-        <strong>Forest Hills · 18 лунок</strong><br />
-        <small>Воскресенье, 10:30 · 2 игрока</small>
+    <div class="section" data-section="map">
+      <div class="section-header">
+        <p class="section-title">Карта клубов</p>
+        <span class="subtle">Яндекс карта с отметками</span>
       </div>
-      <div class="pill-label">Оплачено</div>
-      <div style="color:#94a3b8;">Каршеринг · 15 мин</div>
-      <div style="color:#e2e8f0;">4 200 ₽</div>
+      <p class="hint">Выберите клуб на карте, чтобы перейти к списку слотов и быстро зафиксировать бронирование.</p>
+      <div class="map-card">
+        <div class="map-grid" aria-hidden="true"></div>
+        <div class="marker" style="top:26%;left:28%;">
+          <div class="marker-label">Skolkovo</div>
+        </div>
+        <div class="marker" style="top:46%;left:62%;background:linear-gradient(145deg,#22d3ee,#10b981);">
+          <div class="marker-label">Moscow CC</div>
+        </div>
+        <div class="marker" style="top:60%;left:40%;background:linear-gradient(145deg,#a855f7,#3b82f6);">
+          <div class="marker-label">Pestovo</div>
+        </div>
+        <div class="map-footer">
+          <div class="tag-list">
+            <span class="tag">Парковые и лесные</span>
+            <span class="tag">18 лунок</span>
+            <span class="tag">Пар-курсы</span>
+          </div>
+          <button class="btn" data-nav="clubs">Выбрать клуб →</button>
+        </div>
+      </div>
     </div>
 
-    <div class="list-item">
-      <div>
-        <strong>Links Valley · 9 лунок</strong><br />
-        <small>Понедельник, 07:45 · 1 игрок</small>
+    <div class="section" data-section="clubs">
+      <div class="section-header">
+        <p class="section-title">Клубы Москвы и МО</p>
+        <span class="subtle">Нажмите на клуб — увидите слоты</span>
       </div>
-      <div class="pill-label" style="background:rgba(234,179,8,0.12);border-color:rgba(234,179,8,0.3);color:#fcd34d;">Ожидает</div>
-      <div style="color:#94a3b8;">Кадди включён</div>
-      <div style="color:#e2e8f0;">6 900 ₽</div>
+      <div class="card-list">
+        <div class="club-card">
+          <div class="slot-top">
+            <h3>Skolkovo Golf Club</h3>
+            <button class="cta" data-nav="slots">Выбрать клуб</button>
+          </div>
+          <div class="club-meta">Сколковское шоссе · 18 лунок · Ближе всего к центру</div>
+          <div class="tag-list">
+            <span class="tag">Турниры европейского уровня</span>
+            <span class="tag">Самый близкий к центру</span>
+            <span class="tag">Парковка и ресторан</span>
+          </div>
+        </div>
+        <div class="club-card">
+          <div class="slot-top">
+            <h3>Moscow Country Club</h3>
+            <button class="cta" data-nav="slots">Выбрать клуб</button>
+          </div>
+          <div class="club-meta">Нахабино · 18 лунок · Чемпионский парк-ленд курс</div>
+          <div class="tag-list">
+            <span class="tag">Сезонный турнир календарь</span>
+            <span class="tag">Лучший для начинающих</span>
+            <span class="tag">Лесной рельеф</span>
+          </div>
+        </div>
+        <div class="club-card">
+          <div class="slot-top">
+            <h3>Pestovo Golf & Yacht Club</h3>
+            <button class="cta" data-nav="slots">Выбрать клуб</button>
+          </div>
+          <div class="club-meta">Мытищи · 18 лунок · Вид на водохранилище</div>
+          <div class="tag-list">
+            <span class="tag">Пар-курс</span>
+            <span class="tag">Яхт-клуб рядом</span>
+            <span class="tag">Закатные слоты</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section hidden" data-section="slots">
+      <div class="section-header">
+        <p class="section-title">Ближайшие свободные слоты</p>
+        <span class="subtle" id="slot-counter">3 слота найдены</span>
+      </div>
+      <p class="hint">Фильтруйте по дате, времени, количеству игроков и типу бронирования. Выберите клуб или слот ниже — показываем подходящие варианты.</p>
+
+      <div class="filters">
+        <div class="filters-row">
+          <div>
+            <label for="from-date">От</label>
+            <input type="date" id="from-date" />
+          </div>
+          <div>
+            <label for="to-date">До</label>
+            <input type="date" id="to-date" />
+          </div>
+        </div>
+        <div class="filters-row">
+          <div>
+            <label for="time-filter">Время</label>
+            <select id="time-filter">
+              <option value="any">Любое</option>
+              <option value="morning">Утро</option>
+              <option value="day">День</option>
+              <option value="evening">Вечер</option>
+            </select>
+          </div>
+          <div>
+            <label for="players-filter">Количество игроков</label>
+            <select id="players-filter">
+              <option value="any">Любое</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label>Теги</label>
+          <div class="chips" id="tag-chips">
+            <div class="chip active" data-tag="all">Все</div>
+            <div class="chip" data-tag="team">Ти-тайм</div>
+            <div class="chip" data-tag="training">Тренировка</div>
+            <div class="chip" data-tag="tournament">Турнир</div>
+          </div>
+        </div>
+        <div class="actions-bar">
+          <button class="btn" id="apply-filters">Показать слоты</button>
+          <span class="subtle">Выберите «Бронировать» чтобы закрепить слот</span>
+        </div>
+      </div>
+
+      <div class="card-list" id="slot-list"></div>
+    </div>
+
+    <div class="section" data-section="news">
+      <div class="section-header">
+        <p class="section-title">Новости клубов</p>
+        <span class="subtle">Мероприятия, турниры и обновления</span>
+      </div>
+      <div class="card-list">
+        <div class="news-card">
+          <div class="slot-top">
+            <h3>Pro-Am Stripe Invitational в Skolkovo</h3>
+            <div class="news-date">21.06.2025</div>
+          </div>
+          <div class="news-meta">Skolkovo Golf Club</div>
+          <div class="hint">Совместный Pro-Am турнир для корпоративных команд, лучших любителей и приглашённых гостей. Доступны VIP-пакеты и отдельные ти-таймы для друзей клуба.</div>
+          <div class="tag-list">
+            <span class="tag">самый близкий к центру</span>
+            <span class="tag">турнир</span>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="slot-top">
+            <h3>Серия открытых тренировок для начинающих</h3>
+            <div class="news-date">26.06.2025</div>
+          </div>
+          <div class="news-meta">Moscow Country Club</div>
+          <div class="hint">Короткий курс и стрельба драйвами, групповые тренировки с прокатом инвентаря и персональным наставником. Слоты по пятницам и субботам.</div>
+          <div class="tag-list">
+            <span class="tag">самый близкий к центру</span>
+            <span class="tag">тренировки</span>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="slot-top">
+            <h3>Закрытый турнирный уикенд</h3>
+            <div class="news-date">02.07.2025</div>
+          </div>
+          <div class="news-meta">Agalarov Golf & Country Club</div>
+          <div class="hint">Тридцать шесть лунок за два дня, форматы foursome и fourball. Специальные приглашения для гостей, проживание в клубном отеле и гастро-ужин.</div>
+          <div class="tag-list">
+            <span class="tag">чемпионский курс</span>
+            <span class="tag">турнир</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-bar">
+      <button class="nav-btn" data-nav="map">
+        <div class="icon">🗺️</div>
+        <div>Карта</div>
+      </button>
+      <button class="nav-btn active" data-nav="clubs">
+        <div class="icon">🏌️‍♂️</div>
+        <div>Клубы</div>
+      </button>
+      <button class="nav-btn" data-nav="slots">
+        <div class="icon">⏱️</div>
+        <div>Слоты</div>
+      </button>
+      <button class="nav-btn" data-nav="news">
+        <div class="icon">📰</div>
+        <div>Новости</div>
+      </button>
     </div>
   </div>
 
-      <div class="footer-note">Интерфейс оптимизирован под рамку iPhone в обёртке golf_mobile.html</div>
-    </div>
-  </body>
-  </html>
+  <script>
+    const sections = document.querySelectorAll('[data-section]');
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const navTriggers = document.querySelectorAll('[data-nav]');
+    const slotList = document.getElementById('slot-list');
+    const slotCounter = document.getElementById('slot-counter');
+    const tagChips = document.getElementById('tag-chips');
+    const fromDate = document.getElementById('from-date');
+    const toDate = document.getElementById('to-date');
+    const timeFilter = document.getElementById('time-filter');
+    const playersFilter = document.getElementById('players-filter');
+    const applyFilters = document.getElementById('apply-filters');
+    const selectedSlots = new Set();
 
-  </template>
+    const slots = [
+      {
+        id: 'slot-1',
+        date: '2025-06-26',
+        time: '08:40',
+        club: 'Skolkovo Golf Club',
+        location: 'Сколково',
+        capacity: 4,
+        booked: 2,
+        tags: ['team', 'tournament'],
+        price: '9 400 ₽',
+        label: 'ТИ-ТАЙМ',
+        period: 'morning'
+      },
+      {
+        id: 'slot-2',
+        date: '2025-06-29',
+        time: '09:30',
+        club: 'Pestovo Golf & Yacht Club',
+        location: 'Мытищи',
+        capacity: 3,
+        booked: 1,
+        tags: ['training'],
+        price: '6 700 ₽',
+        label: 'ТРЕНИРОВКА',
+        period: 'day'
+      },
+      {
+        id: 'slot-3',
+        date: '2025-07-02',
+        time: '18:10',
+        club: 'Moscow Country Club',
+        location: 'Нахабино',
+        capacity: 4,
+        booked: 0,
+        tags: ['team'],
+        price: '8 500 ₽',
+        label: 'ТИ-ТАЙМ',
+        period: 'evening'
+      }
+    ];
+
+    function setActiveSection(target) {
+      sections.forEach((section) => {
+        section.classList.toggle('hidden', section.dataset.section !== target);
+      });
+      navButtons.forEach((btn) => {
+        const shouldActivate = btn.dataset.nav === target;
+        btn.classList.toggle('active', shouldActivate);
+      });
+    }
+
+    function tagMatches(slot, activeTags) {
+      if (activeTags.includes('all') || activeTags.length === 0) return true;
+      return slot.tags.some((tag) => activeTags.includes(tag));
+    }
+
+    function periodMatches(slot, filterValue) {
+      if (filterValue === 'any') return true;
+      return slot.period === filterValue;
+    }
+
+    function playersMatch(slot, playersValue) {
+      if (playersValue === 'any') return true;
+      const requested = Number(playersValue);
+      return slot.capacity >= requested;
+    }
+
+    function dateMatches(slot, start, end) {
+      const slotDate = new Date(slot.date);
+      if (start && slotDate < start) return false;
+      if (end && slotDate > end) return false;
+      return true;
+    }
+
+    function formatDate(dateStr) {
+      const [year, month, day] = dateStr.split('-');
+      return `${day}.${month}.${year}`;
+    }
+
+    function renderSlots() {
+      const activeTags = [...tagChips.querySelectorAll('.chip.active')].map((chip) => chip.dataset.tag);
+      const startDate = fromDate.value ? new Date(fromDate.value) : null;
+      const endDate = toDate.value ? new Date(toDate.value) : null;
+      const period = timeFilter.value;
+      const players = playersFilter.value;
+
+      const filtered = slots.filter((slot) =>
+        tagMatches(slot, activeTags) &&
+        periodMatches(slot, period) &&
+        playersMatch(slot, players) &&
+        dateMatches(slot, startDate, endDate)
+      );
+
+      slotList.innerHTML = '';
+
+      filtered.forEach((slot) => {
+        const available = slot.capacity - slot.booked;
+        const isSelected = selectedSlots.has(slot.id);
+        const card = document.createElement('div');
+        card.className = 'slot-card';
+        card.innerHTML = `
+          <div class="slot-top">
+            <div class="slot-time">${slot.label}</div>
+            <div class="price">${slot.price}</div>
+          </div>
+          <div class="club-meta">${formatDate(slot.date)} · ${slot.time} · ${slot.booked} из ${slot.capacity} мест занято · ${slot.club}</div>
+          <div class="slot-tags">
+            ${slot.tags.map((tag) => `<span class="slot-tag">${tag === 'team' ? 'Ти-тайм' : tag === 'training' ? 'Тренировка' : 'Турнир'}</span>`).join('')}
+            <span class="slot-tag">${slot.location}</span>
+          </div>
+          <div class="slot-actions">
+            <span class="subtle">${available > 1 ? 'Свободно' : 'Последнее место'} · ${slot.period === 'evening' ? 'закатный слот' : 'дневной слот'}</span>
+            <button class="slot-cta ${isSelected ? 'selected' : ''}" data-slot="${slot.id}">${isSelected ? 'Выбрано' : 'Бронировать'}</button>
+          </div>
+        `;
+        slotList.appendChild(card);
+      });
+
+      slotCounter.textContent = `${filtered.length} слот(ов) найдено`;
+    }
+
+    navTriggers.forEach((button) => {
+      button.addEventListener('click', () => setActiveSection(button.dataset.nav));
+    });
+
+    tagChips.addEventListener('click', (event) => {
+      const chip = event.target.closest('.chip');
+      if (!chip) return;
+      if (chip.dataset.tag === 'all') {
+        tagChips.querySelectorAll('.chip').forEach((c) => c.classList.toggle('active', c.dataset.tag === 'all'));
+      } else {
+        tagChips.querySelector('[data-tag="all"]').classList.remove('active');
+        chip.classList.toggle('active');
+        const anyActive = tagChips.querySelectorAll('.chip.active').length;
+        if (!anyActive) {
+          tagChips.querySelector('[data-tag="all"]').classList.add('active');
+        }
+      }
+    });
+
+    applyFilters.addEventListener('click', renderSlots);
+    [fromDate, toDate, timeFilter, playersFilter].forEach((input) => input.addEventListener('change', renderSlots));
+
+    slotList.addEventListener('click', (event) => {
+      const target = event.target.closest('.slot-cta');
+      if (!target) return;
+      const slotId = target.dataset.slot;
+      if (selectedSlots.has(slotId)) {
+        selectedSlots.delete(slotId);
+      } else {
+        selectedSlots.add(slotId);
+      }
+      renderSlots();
+    });
+
+    // Default state
+    setActiveSection('clubs');
+    renderSlots();
+  </script>
+</body>
+</html>
+
+</template>
 
   <script>
     const frame = document.getElementById('ui-frame');
