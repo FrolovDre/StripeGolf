@@ -20,6 +20,15 @@
       color: #e2e8f0;
       min-height: 100vh;
       padding: 16px 14px 22px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
     }
 
     .status-bar {
@@ -213,8 +222,9 @@
     }
   </style>
 </head>
-<body>
-  <div class="status-bar">
+  <body>
+    <div class="app">
+      <div class="status-bar">
     <span class="time">09:41</span>
     <span class="pill">Stripe Golf · Live</span>
     <span style="text-align: right;">LTE · 85%</span>
@@ -283,6 +293,7 @@
     </div>
   </div>
 
-  <div class="footer-note">Интерфейс оптимизирован под рамку iPhone в обёртке golf_mobile.html</div>
-</body>
+      <div class="footer-note">Интерфейс оптимизирован под рамку iPhone в обёртке golf_mobile.html</div>
+    </div>
+  </body>
 </html>
