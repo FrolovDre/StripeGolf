@@ -41,47 +41,66 @@
       <section class="section section--active" id="profile" aria-labelledby="profile-title">
         <header class="topbar">
           <div class="top-actions-left">
-            <button class="icon-ghost" aria-label="Сообщения">
-              <span class="icon">💬</span>
+            <button class="pill-action" id="messages-btn">
+              <span class="icon">💬</span> Сообщения
             </button>
           </div>
           <div class="top-actions-right">
-            <button class="icon-ghost" aria-label="Новости">
-              <span class="icon">🔔</span>
-            </button>
-            <button class="icon-ghost" aria-label="Настройки">
-              <span class="icon">⚙️</span>
-            </button>
-            <button class="icon-ghost" aria-label="Поддержка">
-              <span class="icon">🎧</span>
+            <button class="pill-action ghost" id="login-btn">Войти</button>
+            <button class="pill-action" id="news-btn">
+              <span class="icon">🔔</span> Новости
             </button>
           </div>
         </header>
 
-        <div class="section-header">
-          <div>
-            <p class="eyebrow">Домашняя</p>
-            <h1 id="profile-title">Профиль игрока</h1>
-            <p class="muted">Ваши ближайшие игры, гандикап и активность.</p>
+        <article class="card profile-hero">
+          <div class="profile-header">
+            <div>
+              <p class="eyebrow">Домашняя</p>
+              <h1 id="profile-title">Фролов Андрей</h1>
+              <p class="muted">Рейтинг 1.00 • Гандикап 12.4</p>
+            </div>
+            <div class="profile-actions">
+              <button class="icon-ghost" id="chat-btn" aria-label="Чат">
+                <span class="icon">💬</span>
+              </button>
+              <button class="icon-ghost" id="settings-btn" aria-label="Настройки">
+                <span class="icon">⚙️</span>
+              </button>
+              <button class="icon-ghost" id="support-btn" aria-label="Поддержка">
+                <span class="icon">🎧</span>
+              </button>
+            </div>
           </div>
-          <div class="badge gold">HCP 7.8</div>
-        </div>
 
-        <div class="grid two">
-          <article class="card highlight">
-            <div class="card-title">Ближайшие бронирования</div>
-            <div class="booking-list" id="profile-bookings"></div>
-          </article>
-          <article class="card">
-            <div class="card-title">Статистика</div>
-            <ul class="stats">
-              <li><span>Сыграно раундов</span><strong>42</strong></li>
-              <li><span>Средний счёт</span><strong>78</strong></li>
-              <li><span>Лучший результат</span><strong>-2</strong></li>
-              <li><span>Часов на тренировках</span><strong>126</strong></li>
-            </ul>
-          </article>
-        </div>
+          <div class="profile-summary">
+            <div class="summary-item">
+              <div class="summary-value">0</div>
+              <div class="summary-label">Турниры</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-value">3</div>
+              <div class="summary-label">Игры</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-value">2</div>
+              <div class="summary-label">Напарники</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-title">Мои бронирования <span class="muted">Ближайшие</span></div>
+          <div class="booking-list" id="profile-bookings"></div>
+        </article>
+
+        <article class="card">
+          <div class="card-title">Результаты и рейтинг</div>
+          <div class="rating-block">
+            <div class="rating-value">Гандикап 12.4</div>
+            <p class="muted">Не подтверждён — запросите у тренера</p>
+          </div>
+        </article>
       </section>
 
       <section class="section" id="play" aria-labelledby="play-title">
@@ -97,11 +116,10 @@
         <div class="filters" id="filters">
           <div class="filter-group" data-filter="date">
             <label>Дата</label>
-            <div class="chip-row">
-              <button class="chip chip--active" data-value="all">Все даты</button>
-              <button class="chip" data-value="today">Сегодня</button>
-              <button class="chip" data-value="tomorrow">Завтра</button>
-              <button class="chip" data-value="weekend">Выходные</button>
+            <div class="chip-row" id="date-chips"></div>
+            <div class="date-row">
+              <input type="date" id="datePicker" aria-label="Выбрать дату">
+              <button class="chip ghost" id="resetDate">Сбросить дату</button>
             </div>
           </div>
           <div class="filter-group" data-filter="time">
@@ -212,6 +230,38 @@
         <button class="icon-ghost" id="close-course" aria-label="Закрыть карту">✕</button>
       </div>
       <div class="course-map" id="course-map"></div>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">Профиль</p>
+          <h2 id="auth-title">Вход или регистрация</h2>
+        </div>
+        <button class="icon-ghost" id="close-auth" aria-label="Закрыть">✕</button>
+      </div>
+      <form class="auth-form" id="auth-form">
+        <div class="form-row">
+          <label for="authName">Имя</label>
+          <input id="authName" name="name" type="text" placeholder="Ваше имя" required>
+        </div>
+        <div class="form-row">
+          <label for="authEmail">Email</label>
+          <input id="authEmail" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-row radio-row">
+          <label>Роль</label>
+          <div class="radio-options">
+            <label><input type="radio" name="authType" value="login" checked> Авторизоваться</label>
+            <label><input type="radio" name="authType" value="register"> Зарегистрироваться</label>
+          </div>
+        </div>
+        <div class="action-row">
+          <button type="submit" class="btn primary">Перейти в профиль</button>
+        </div>
+      </form>
     </div>
   </div>
 
